@@ -1,14 +1,18 @@
 <?php
 
+session_start();
+
 /**
  * چک میکند که متد فٌرم صفحه آپلود پٌست هست یا خیر
  */
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     /**
      * چک میکند دکمه آپلود ساب میت شده یا خیر
      */
     if (isset($_POST['fileBtn'])) {
+
+        $uploadMsg = false;
 
         /**
          * حتما باید فایل در اینپوت آپلود شده باشد
@@ -32,10 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
                 $uploadPath = 'upload/' . $newFileName;
 
-                move_uploaded_file($_FILES['fileInput']['tmp_name'], $uploadPath);
+                if (move_uploaded_file($_FILES['fileInput']['tmp_name'], $uploadPath)) {
+                    $uploadMsg = true;
+                }
             }
         }
     }
 }
+
+$_SESSION['uploadMsg'] = $uploadMsg;
 
 header('location:index.php');
