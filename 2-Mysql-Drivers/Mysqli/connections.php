@@ -14,6 +14,4 @@ if ($mysqli->connect_errno) {
 
 # اگر اتصال به دیتابیس اوکی بود کد های زیر اجرا می شود
 
-echo 'connections is successfully';
-
 $mysqli->set_charset('utf8');
