@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      * چک میکند دکمه آپلود ساب میت شده یا خیر
      */
     if (isset($_POST['fileBtn'])) {
-
         $uploadMsg = false;
 
         /**
@@ -19,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          * و خالی نباشد
          */
         if (isset($_FILES['fileInput']) && !empty($_FILES['fileInput'])) {
-
             $fileName = $_FILES['fileInput']['name'];
             $fileType = explode('.', $fileName);
             $fileType = strtolower(end($fileType));
@@ -30,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
              * چک میکند فرمت فایل مجاز میباشد یا خیر
              */
             if (in_array($fileType, $typeAllowed)) {
-
                 if (!file_exists('upload')) {
                     mkdir('upload');
                 }
