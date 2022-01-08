@@ -4,50 +4,62 @@ include_once "connections.php";
 include_once "style.php";
 
 
-// $query = "SELECT * FROM users";
 
+//FIXME: کوئری اول
+
+// $query = "SELECT * FROM users";
 // $result = $mysqli->query($query);
 
 // echo "<table>";
-//  while ($row = $result->fetch_object()) {
-//      echo "<tr>";
-//      foreach ($row as $key => $value) {
-//          echo "<td>$value</td>";
-//      }
-//      echo "</tr>";
-//  }
+// while ($row = $result->fetch_object()) {
+//     echo "<tr>";
+//     foreach ($row as $key => $value) {
+//         echo "<td>$value</td>";
+//     }
+//     echo "</tr>";
+// }
 // echo "</table>";
 
-// $query = "SELECT avg(userAGE) as avg_age, count(*) as cornwall FROM users";
+
+//TODO: کوئری دوم
+
+// $query = "SELECT avg(userAGE) as age_avg , count(*) as count_all FROM users";
 
 // $stmt = $mysqli->prepare($query);
 // $stmt->execute();
-// $stmt->bind_result($avg_age, $cornwall);
+// $stmt->bind_result($age_avg, $count_all);
 // $stmt->fetch();
 
-
-// echo $avg_age;
+// echo "all age avg is $age_avg";
 // echo "<br>";
-// echo $cornwall;
+// echo "count all column is $count_all";
 
 
-// $query = "SELECT userNAME,userLASTNAME FROM users";
+//TODO کوئری سوم
+
+// $query = "SELECT userID,userAGE FROM users";
 
 // $stmt = $mysqli->prepare($query);
 // $stmt->execute();
-// $stmt->bind_result($userNAME, $userLASTNAME);
-
+// $stmt->bind_result($userID, $userAGE);
+// echo "<table>";
 // while ($stmt->fetch()) {
-//     echo $userNAME . ' : ' . $userLASTNAME . "<br>";
+//     echo "<tr>";
+//     echo "<td>$userID</td>";
+//     echo "<td>$userAGE</td>";
+//     echo "</tr>";
 // }
+// echo "</table>";
 
+
+//TODO کوئری چهارم
 
 $query = "SELECT * FROM users";
 
 $stmt = $mysqli->prepare($query);
+$stmt->bind_result($id, $name, $lastName, $age);
 $stmt->execute();
-$stmt->bind_result($userID, $userNAME, $userLASTNAME, $userAGE);
 
 while ($stmt->fetch()) {
-    echo $userNAME . ' : ' . $userLASTNAME ." : " . $userAGE . "<br>";
+    echo $id . "<br>";
 }
