@@ -15,6 +15,25 @@
 
 <body>
 
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <form class="my-5" action="insertData.php" method="post" id="provinceForm">
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">City Name</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1">
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+                <div class="" id="result"></div>
+
+            </div>
+        </div>
+    </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -32,6 +51,29 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
     </script>
+
+    <script>
+        $(document).ready(function() {
+            var form = $("#provinceForm");
+            var resultTag = $("#result");
+
+            form.submit(function(event) {
+                resultTag.html(
+                    "<div class='spinner-border text-warning' role='status'> <span class='visually-hidden'>Loading...</span></div>"
+                );
+                event.preventDefault();
+                $.ajax({
+                    url: form.attr('action'),
+                    method: form.attr('method'),
+                    data: form.serialize(),
+                    success: function(e) {
+                        resultTag.html(e)
+                    }
+                })
+            })
+        })
+    </script>
+
 </body>
 
 </html>
