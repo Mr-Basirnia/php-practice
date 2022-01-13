@@ -11,6 +11,16 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <title>Insert City to Database</title>
+
+    <style>
+        span.success {
+            color: #4CAF50;
+        }
+
+        span.error {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -22,7 +32,7 @@
 
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">City Name</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1">
+                        <input type="text" class="form-control" id="exampleInputEmail1" name="cityName">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
 
