@@ -28,5 +28,5 @@ $stmt = $db->prepare($query);
 $insertData = $stmt->execute([rand(1, 31),$cityName]);
 
 if ($insertData) {
-    getMsg("شهر $cityName با موفقیت ثبت گردید . با سپاس از شما", 'success');
+    getMsg("شهر '$cityName' با موفقیت ثبت گردید . با سپاس از شما", 'success');
 }
