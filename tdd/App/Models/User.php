@@ -7,6 +7,7 @@ class User
     private static ?User $instance = null;
     private string $firstName;
     private string $lastName;
+    private string $fullName;
 
     public function __construct()
     {
@@ -20,28 +21,20 @@ class User
         return self::$instance;
     }
 
-    public function getFullName(): string
+    /**
+     * If the property exists, and the method name starts with 'set', then set the property to the first argument.
+     * If the method name starts with 'get', then return the property
+     *
+     * @param string $name The name of the method being called.
+     * @param array $arguments The arguments passed to the method.
+     */
+    public function __call(string $name, array $arguments)
     {
-        return "{$this->getFirstName()} {$this->getLastName()}";
-    }
+        $property = lcfirst(substr($name, 3));
 
-    public function getFirstName(): string
-    {
-        return $this->firstName;
-    }
-
-    public function setFirstName(string $firstName)
-    {
-        $this->firstName = trim($firstName);
-    }
-
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(string $lastName)
-    {
-        $this->lastName = trim($lastName);
+        if (property_exists($this, $property)) {
+            if ('set' == substr($name, 0, 3)) $this->$property = trim($arguments[0]);
+            if ('get' == substr($name, 0, 3)) return $this->$property;
+        }
     }
 }
