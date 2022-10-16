@@ -25,6 +25,7 @@ class UserTest extends TestCase
         $user = User::getInstance();
         $user->setFirstName('reza');
         $user->setLastName('iri');
+        $user->setFullName("{$user->getFirstName()} {$user->getLastName()}");
 
         $this->assertEquals('reza iri', $user->getFullName());
     }
