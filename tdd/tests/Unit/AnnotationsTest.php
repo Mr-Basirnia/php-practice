@@ -24,4 +24,18 @@ class AnnotationsTest extends TestCase
         $value++;
         $this->assertEquals(2, $value);
     }
+
+    /**
+     * @dataProvider numberCollection
+     * @return void
+     */
+    public function testIsValidNumber($collection)
+    {
+        $this->assertTrue($collection > 0);
+    }
+
+    public function numberCollection(): array
+    {
+        return [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10]];
+    }
 }
