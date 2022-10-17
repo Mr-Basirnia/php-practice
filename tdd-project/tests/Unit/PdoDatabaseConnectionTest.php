@@ -22,17 +22,21 @@ class PdoDatabaseConnectionTest extends TestCase
         return Config::get('database', 'pdo_testing');
     }
 
-    public function testContentMethodShouldBeInstanceOfPdo()
+    /**
+     * @depends testPdoDatabaseConnectionConnectMethodReturnValid
+     * @return void
+     * @throws PdoDatabaseException
+     */
+    public function testContentMethodShouldBeInstanceOfPdo($pdo)
     {
-        $pdo = new PDODatabaseConnection($this->config());
-        $pdo->connect();
         $this->assertInstanceOf(PDO::class, $pdo->getConnection());
     }
 
-    public function testPdoDatabaseConnectionConnectMethodReturnValid()
+    public function testPdoDatabaseConnectionConnectMethodReturnValid(): PDODatabaseConnection
     {
         $pdo = new PDODatabaseConnection($this->config());
         $this->assertInstanceOf(PDODatabaseConnection::class, $pdo->connect());
+        return $pdo->connect();
     }
 
     public function testPdoDatabaseReturnValidException()
