@@ -7,7 +7,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "MrBasirnia\\TddProject\\": "src/"
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\" : "tests/"
         }
     },
     "authors": [
