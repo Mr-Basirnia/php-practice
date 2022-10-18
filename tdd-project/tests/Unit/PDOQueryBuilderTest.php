@@ -59,4 +59,20 @@ class PDOQueryBuilderTest extends TestCase
             'email' => 'mr.basirnia@gmail.com'
         ]);
     }
+
+    public function testItCanUpdateData()
+    {
+        $this->getI();
+
+        $result = $this->queryBuilder
+            ->table('bugs')
+            ->where('user', 'amin basirnia')
+            ->where('email', 'mr.basirnia@gmail.com')
+            ->update([
+                'title' => 'update title',
+                'email' => 'updated.mr.basirnia@gmail.com',
+            ]);
+
+        $this->assertEquals(2, $result);
+    }
 }
