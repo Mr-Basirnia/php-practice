@@ -4,6 +4,7 @@ namespace Test\Unit;
 
 use App\Contracts\DatabaseConnectionInterface;
 use App\Database\PDODatabaseConnection;
+use App\Exceptions\ConfigFileNotValidException;
 use App\Exceptions\PdoDatabaseException;
 use App\Helpers\Config;
 use PDO;
@@ -44,6 +45,18 @@ class PdoDatabaseConnectionTest extends TestCase
         $this->expectException(PdoDatabaseException::class);
         $config = $this->config();
         $config['database'] = md5(rand(9, 9999));
+        $pdo = new PDODatabaseConnection($config);
+        $pdo->connect();
+    }
+
+    public function testConfigDatabaseConnectionIsValidKeys()
+    {
+        $this->expectException(ConfigFileNotValidException::class);
+
+        $config = $this->config();
+        unset($config['db_username']);
+        unset($config['db_password']);
+
         $pdo = new PDODatabaseConnection($config);
         $pdo->connect();
     }
