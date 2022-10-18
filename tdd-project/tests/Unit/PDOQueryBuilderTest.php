@@ -76,6 +76,19 @@ class PDOQueryBuilderTest extends TestCase
         $this->assertEquals(1, $result);
     }
 
+    public function testItCanDeleteData()
+    {
+        $this->getI();
+        $this->getI();
+
+        $result = $this->queryBuilder
+            ->table('bugs')
+            ->where('id', '2')
+            ->delete();
+
+        $this->assertEquals(1, $result);
+    }
+
     protected function tearDown(): void
     {
         $this->queryBuilder->truncateALlTables();

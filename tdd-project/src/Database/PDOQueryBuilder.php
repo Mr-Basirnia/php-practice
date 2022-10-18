@@ -81,6 +81,16 @@ class PDOQueryBuilder
         return $result->rowCount();
     }
 
+    public function delete(): int
+    {
+        $conditions = implode(' and ', $this->conditions);
+
+        $result = $this->pdo->prepare("DELETE FROM {$this->table} WHERE {$conditions}");
+        $result->execute($this->values);
+
+        return $result->rowCount();
+    }
+
     public function truncateALlTables()
     {
         $tables = $this->pdo->prepare('SHOW TABLES');
