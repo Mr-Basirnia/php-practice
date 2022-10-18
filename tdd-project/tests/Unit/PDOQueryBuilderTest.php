@@ -73,6 +73,12 @@ class PDOQueryBuilderTest extends TestCase
                 'email' => 'updated.mr.basirnia@gmail.com',
             ]);
 
-        $this->assertEquals(2, $result);
+        $this->assertEquals(1, $result);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->queryBuilder->truncateALlTables();
+        parent::tearDown();
     }
 }

@@ -80,4 +80,14 @@ class PDOQueryBuilder
 
         return $result->rowCount();
     }
+
+    public function truncateALlTables()
+    {
+        $tables = $this->pdo->prepare('SHOW TABLES');
+        $tables->execute();
+
+        foreach ($tables->fetchAll(PDO::FETCH_COLUMN) as $table) {
+            $this->pdo->prepare('TRUNCATE TABLE `' . $table . '`')->execute();
+        }
+    }
 }
