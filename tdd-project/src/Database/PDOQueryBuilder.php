@@ -8,6 +8,8 @@ class PDOQueryBuilder
 {
     protected PDO $pdo;
     protected string $table;
+    protected array $conditions = [];
+    protected array $values = [];
 
     /**
      * The function takes a PDODatabaseConnection object as an argument, and sets the $pdo property to the PDO connection object
@@ -54,5 +56,28 @@ class PDOQueryBuilder
         $this->pdo->prepare($sql)->execute(array_values($data));
 
         return intval($this->pdo->lastInsertId());
+    }
+
+    public function where(string $colum, string $value): PDOQueryBuilder
+    {
+        $this->conditions[] = "{$colum}=?";
+        $this->values[] = $value;
+
+        return $this;
+    }
+
+    public function update(array $data): int
+    {
+        $fields = [];
+        foreach ($data as $colum => $value) {
+            $fields[] = "{$colum}='{$value}'";
+        }
+        $fields = implode(',', $fields);
+        $conditions = implode(' and ', $this->conditions);
+
+        $result = $this->pdo->prepare("UPDATE {$this->table} SET {$fields} WHERE {$conditions}");
+        $result->execute($this->values);
+
+        return $result->rowCount();
     }
 }
