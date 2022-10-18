@@ -12,26 +12,20 @@ use PHPUnit\Framework\TestCase;
 
 class PDOQueryBuilderTest extends TestCase
 {
+
+    private PDOQueryBuilder $queryBuilder;
+
     /**
-     * It creates a new record in the bugs table with the given data.
-     *
      * @throws ConfigFileNotValidException
-     * @throws PdoDatabaseException|ConfigFileNotFoundException
+     * @throws PdoDatabaseException
+     * @throws ConfigFileNotFoundException
      */
-    public function testItCanInsertData()
+    public function setUp(): void
     {
         $pdo = new PDODatabaseConnection($this->getConfig());
-        $queryBuilder = new PDOQueryBuilder($pdo->connect());
+        $this->queryBuilder = new PDOQueryBuilder($pdo->connect());
 
-        $result = $queryBuilder->table('bugs')->create([
-            'title' => 'Form Login Not Display',
-            'href' => 'https://login.com',
-            'user' => 'amin basirnia',
-            'email' => 'mr.basirnia@gmail.com'
-        ]);
-
-        $this->assertIsInt($result);
-        $this->assertGreaterThan(0, $result);
+        parent::setUp();
     }
 
     /**
@@ -43,5 +37,26 @@ class PDOQueryBuilderTest extends TestCase
     private function getConfig(): array
     {
         return Config::get('database', 'pdo_testing');
+    }
+
+    /**
+     * It creates a new record in the bugs table with the given data.
+     */
+    public function testItCanInsertData()
+    {
+        $result = $this->getI();
+
+        $this->assertIsInt($result);
+        $this->assertGreaterThan(0, $result);
+    }
+
+    public function getI(): int
+    {
+        return $this->queryBuilder->table('bugs')->create([
+            'title' => 'Form Login Not Display',
+            'href' => 'https://login.com',
+            'user' => 'amin basirnia',
+            'email' => 'mr.basirnia@gmail.com'
+        ]);
     }
 }
