@@ -20,18 +20,29 @@ class PDOQueryBuilderTest extends TestCase
      */
     public function testItCanInsertData()
     {
+        $result = $this->getI();
+
+        $this->assertIsInt($result);
+        $this->assertGreaterThan(0, $result);
+    }
+
+    /**
+     * @return int
+     * @throws ConfigFileNotFoundException
+     * @throws ConfigFileNotValidException
+     * @throws PdoDatabaseException
+     */
+    public function getI(): int
+    {
         $pdo = new PDODatabaseConnection($this->getConfig());
         $queryBuilder = new PDOQueryBuilder($pdo->connect());
 
-        $result = $queryBuilder->table('bugs')->create([
+        return $queryBuilder->table('bugs')->create([
             'title' => 'Form Login Not Display',
             'href' => 'https://login.com',
             'user' => 'amin basirnia',
             'email' => 'mr.basirnia@gmail.com'
         ]);
-
-        $this->assertIsInt($result);
-        $this->assertGreaterThan(0, $result);
     }
 
     /**
