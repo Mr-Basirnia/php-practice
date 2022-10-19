@@ -105,6 +105,27 @@ class PDOQueryBuilderTest extends TestCase
         $this->assertEquals(2, $result);
     }
 
+    public function testItCanFetchData(): void
+    {
+        $this->multipleInsertData(10);
+        $this->multipleInsertData(10, ['user' => 'QHloNcEw']);
+
+        $result = $this->queryBuilder
+            ->table('bugs')
+            ->where('user', 'QHloNcEw')
+            ->get();
+
+        $this->assertIsArray($result);
+        $this->assertCount(10, $result);
+    }
+
+    private function multipleInsertData(int $count, array $options = []): void
+    {
+        for ($i = 1; $i <= $count; $i++) {
+            $this->getI($options);
+        }
+    }
+
     protected function tearDown(): void
     {
         $this->queryBuilder->rollBack();
