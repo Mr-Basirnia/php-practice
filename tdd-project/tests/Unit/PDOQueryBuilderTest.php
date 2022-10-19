@@ -83,10 +83,10 @@ class PDOQueryBuilderTest extends TestCase
 
         $result = $this->queryBuilder
             ->table('bugs')
-            ->where('id', '2')
+            ->where('user', 'amin basirnia')
             ->delete();
 
-        $this->assertEquals(1, $result);
+        $this->assertEquals(2, $result);
     }
 
     protected function tearDown(): void
