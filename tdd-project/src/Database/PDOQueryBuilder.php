@@ -91,6 +91,16 @@ class PDOQueryBuilder
         return $result->rowCount();
     }
 
+    public function get(): array
+    {
+        $conditions = implode(' and ', $this->conditions);
+        $sql = "SELECT * FROM {$this->table} WHERE {$conditions}";
+
+        $result = $this->pdo->prepare($sql);
+        $result->execute($this->values);
+        return $result->fetchAll();
+    }
+
     public function truncateALlTables()
     {
         $tables = $this->pdo->prepare('SHOW TABLES');
