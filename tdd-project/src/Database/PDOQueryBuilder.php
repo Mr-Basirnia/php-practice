@@ -91,14 +91,15 @@ class PDOQueryBuilder
         return $result->rowCount();
     }
 
-    public function get(): array
+    public function get(array $columns = ['*']): array
     {
         $conditions = implode(' and ', $this->conditions);
-        $sql = "SELECT * FROM {$this->table} WHERE {$conditions}";
+        $columns = implode(',', $columns);
+        $sql = "SELECT {$columns} FROM {$this->table} WHERE {$conditions}";
 
         $result = $this->pdo->prepare($sql);
         $result->execute($this->values);
-        return $result->fetchAll();
+        return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function truncateALlTables()

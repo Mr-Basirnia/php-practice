@@ -126,6 +126,19 @@ class PDOQueryBuilderTest extends TestCase
         }
     }
 
+    public function testItCanFetchDataWithCustomColumns(): void
+    {
+        $this->multipleInsertData(10, ['title' => 'favorite']);
+
+        $result = $this->queryBuilder
+            ->table('bugs')
+            ->where('title', 'favorite')
+            ->get(['id', 'title']);
+
+        $this->assertIsArray($result);
+        $this->assertEquals(['id', 'title'], array_keys($result[0]));
+    }
+
     protected function tearDown(): void
     {
         $this->queryBuilder->rollBack();
