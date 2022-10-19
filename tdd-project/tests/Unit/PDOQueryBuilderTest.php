@@ -149,7 +149,31 @@ class PDOQueryBuilderTest extends TestCase
             ->first();
 
         $this->assertIsArray($result);
-        $this->assertEquals(['id','title','href','user','email','created_at'], array_keys($result));
+        $this->assertEquals(['id', 'title', 'href', 'user', 'email', 'created_at'], array_keys($result));
+    }
+
+    public function testItCanFind(): void
+    {
+        $id = $this->getI(['user' => 'hyI2uJ5']);
+
+        $result = $this->queryBuilder
+            ->table('bugs')
+            ->find($id);
+
+        $this->assertIsArray($result);
+        $this->assertEquals($id, $result['id']);
+    }
+
+    public function testItCanFindBy(): void
+    {
+        $id = $this->getI(['user' => 'R94bRelI']);
+
+        $result = $this->queryBuilder
+            ->table('bugs')
+            ->findBy('id', $id);
+
+        $this->assertIsArray($result);
+        $this->assertEquals($id, $result['id']);
     }
 
     protected function tearDown(): void

@@ -58,14 +58,6 @@ class PDOQueryBuilder
         return intval($this->pdo->lastInsertId());
     }
 
-    public function where(string $colum, string $value): PDOQueryBuilder
-    {
-        $this->conditions[] = "{$colum}=?";
-        $this->values[] = $value;
-
-        return $this;
-    }
-
     public function update(array $data): int
     {
         $fields = [];
@@ -91,6 +83,11 @@ class PDOQueryBuilder
         return $result->rowCount();
     }
 
+    public function find($id)
+    {
+        return $this->where('id', $id)->first();
+    }
+
     public function first(array $columns = ['*'])
     {
         $data = $this->get($columns);
@@ -106,6 +103,19 @@ class PDOQueryBuilder
         $result = $this->pdo->prepare($sql);
         $result->execute($this->values);
         return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function where(string $column, string $value): PDOQueryBuilder
+    {
+        $this->conditions[] = "{$column}=?";
+        $this->values[] = $value;
+
+        return $this;
+    }
+
+    public function findBy(string $column, string $value)
+    {
+        return $this->where($column, $value)->first();
     }
 
     public function truncateALlTables()
