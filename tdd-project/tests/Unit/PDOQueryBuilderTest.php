@@ -176,6 +176,18 @@ class PDOQueryBuilderTest extends TestCase
         $this->assertEquals($id, $result['id']);
     }
 
+    public function testResultIsNullWhenRecordIsNotFound()
+    {
+        $this->getI();
+
+        $result = $this->queryBuilder
+            ->table('bugs')
+            ->where('user', md5(rand(9, 99)))
+            ->first();
+
+        $this->assertNull($result);
+    }
+
     protected function tearDown(): void
     {
         $this->queryBuilder->rollBack();
