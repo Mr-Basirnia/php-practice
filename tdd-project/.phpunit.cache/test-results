@@ -1,1 +1,0 @@
-{"version":1,"defects":{"ConfigTest::testConfigFileReturnArray":4,"ConfigTest::testConfigFileReturnException":4,"ConfigTest::testGetMethodValidData":3},"times":{"ConfigTest::testConfigFileReturnArray":0.002,"ConfigTest::testConfigFileReturnException":0,"ConfigTest::testGetMethodValidData":0}}

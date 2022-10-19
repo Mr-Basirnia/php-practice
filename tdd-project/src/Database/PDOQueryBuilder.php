@@ -100,4 +100,14 @@ class PDOQueryBuilder
             $this->pdo->prepare('TRUNCATE TABLE `' . $table . '`')->execute();
         }
     }
+
+    public function beginTransaction()
+    {
+        $this->pdo->beginTransaction();
+    }
+
+    public function rollBack()
+    {
+        $this->pdo->rollBack();
+    }
 }
