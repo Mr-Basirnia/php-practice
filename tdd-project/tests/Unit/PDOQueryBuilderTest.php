@@ -139,6 +139,19 @@ class PDOQueryBuilderTest extends TestCase
         $this->assertEquals(['id', 'title'], array_keys($result[0]));
     }
 
+    public function testItCanFetchFirstRow(): void
+    {
+        $this->multipleInsertData(10, ['user' => 'motion']);
+
+        $result = $this->queryBuilder
+            ->table('bugs')
+            ->where('user', 'motion')
+            ->first();
+
+        $this->assertIsArray($result);
+        $this->assertEquals(['id','title','href','user','email','created_at'], array_keys($result));
+    }
+
     protected function tearDown(): void
     {
         $this->queryBuilder->rollBack();

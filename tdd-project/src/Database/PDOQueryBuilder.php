@@ -91,6 +91,12 @@ class PDOQueryBuilder
         return $result->rowCount();
     }
 
+    public function first(array $columns = ['*'])
+    {
+        $data = $this->get($columns);
+        return empty($data) ? null : $data[0];
+    }
+
     public function get(array $columns = ['*']): array
     {
         $conditions = implode(' and ', $this->conditions);
