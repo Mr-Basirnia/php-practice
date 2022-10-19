@@ -52,14 +52,14 @@ class PDOQueryBuilderTest extends TestCase
         $this->assertGreaterThan(0, $result);
     }
 
-    public function getI(): int
+    public function getI(array $data = []): int
     {
-        return $this->queryBuilder->table('bugs')->create([
+        return $this->queryBuilder->table('bugs')->create(array_merge([
             'title' => 'Form Login Not Display',
             'href' => 'https://login.com',
             'user' => 'amin basirnia',
             'email' => 'mr.basirnia@gmail.com'
-        ]);
+        ], $data));
     }
 
     public function testItCanUpdateData()
@@ -74,6 +74,20 @@ class PDOQueryBuilderTest extends TestCase
                 'title' => 'update title',
                 'email' => 'updated.mr.basirnia@gmail.com',
             ]);
+
+        $this->assertEquals(1, $result);
+    }
+
+    public function testItCanUpdateDataWithMultipleWhere(): void
+    {
+        $this->getI();
+        $this->getI(['user' => 'jimi']);
+
+        $result = $this->queryBuilder
+            ->table('bugs')
+            ->where('user', 'jimi')
+            ->where('email', 'mr.basirnia@gmail.com')
+            ->update(['title' => 'update with multiple where']);
 
         $this->assertEquals(1, $result);
     }
