@@ -90,6 +90,30 @@ class CrudTest extends TestCase
     }
 
     /**
+     * test delete record with delete api request
+     *
+     * @depends testItCanCreateDataWithApi
+     * @param array $data created record
+     * @return void
+     */
+    public function testItCanDeleteDataWithApi(array $data): void
+    {
+        $response = $this->httpClient->delete('index.php', [
+            'json' => [
+                'id' => $data['id']
+            ]
+        ]);
+
+        // if record is deleted, return null
+        $result = $this->queryBuilder
+            ->table('bugs')
+            ->find($data['id']);
+
+        $this->assertEquals(204, $response->getStatusCode());
+        $this->assertNull($result);
+    }
+
+    /**
      * @throws ConfigFileNotValidException|PdoDatabaseException
      */
     protected function setUp(): void

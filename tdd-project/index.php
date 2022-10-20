@@ -48,3 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $result = $pdoQuery->table('bugs')->find(request()['id']);
     jsonResponse($result, 200);
 }
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+
+    $result = $pdoQuery->table('bugs')->where('id', request()['id'])->delete();
+    jsonResponse(null, 204);
+}
