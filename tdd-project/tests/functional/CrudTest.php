@@ -15,7 +15,7 @@ class CrudTest extends TestCase
     /**
      * @throws GuzzleException
      */
-    public function testItCanCreateDataWithApi(): void
+    public function testItCanCreateDataWithApi(): mixed
     {
         $data = [
             'json' => [
@@ -37,6 +37,36 @@ class CrudTest extends TestCase
             ->first();
 
         $this->assertNotNull($result);
+
+        return $result;
+    }
+
+    /**
+     * check update with api is successfully
+     *
+     * @param $data
+     * @depends testItCanCreateDataWithApi
+     *
+     * @return void
+     * @throws GuzzleException
+     */
+    public function testItCanUpdateWithApi($data): void
+    {
+        $update = [
+            'json' => [
+                'id' => $data['id'],
+                'title' => 'update with api'
+            ]
+        ];
+
+        $response = $this->httpClient->put('index.php', $update);
+
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $record = $this->queryBuilder->table('bugs')->find($data['id']);
+
+        $this->assertNotNull($record);
+        $this->assertEquals('update with api', $record['title']);
     }
 
     /**
