@@ -6,6 +6,7 @@ use App\Helpers\Config;
 
 
 /* Loading the autoloader for the composer packages. */
+
 require_once realpath(__DIR__ . '/vendor/autoload.php');
 
 
@@ -22,7 +23,7 @@ function jsonResponse($data = null, $code = 200)
     header("Content-Type: application/json; charset=UTF-8");
     http_response_code($code);
 
-    echo $data ?? '';
+    echo json_encode($data);
     exit();
 }
 
@@ -42,4 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
         ->update(request());
 
     jsonResponse();
+}
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $result = $pdoQuery->table('bugs')->find(request()['id']);
+    jsonResponse($result, 200);
 }

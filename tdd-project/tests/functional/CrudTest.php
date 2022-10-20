@@ -4,6 +4,7 @@
 use App\Database\{PDODatabaseConnection, PDOQueryBuilder};
 use App\Exceptions\{ConfigFileNotValidException, PdoDatabaseException};
 use App\Helpers\{Config, HttpClient};
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\TestCase;
 
@@ -70,6 +71,25 @@ class CrudTest extends TestCase
     }
 
     /**
+     * get request for fetch data
+     *
+     * @depends testItCanCreateDataWithApi
+     * @param array $data
+     * @return void
+     */
+    public function testItCanFetchDataWithApi(array $data): void
+    {
+        $response = $this->httpClient->get('index.php', [
+            'json' => [
+                'id' => $data['id']
+            ]
+        ]);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertArrayHasKey('id', json_decode($response->getBody(), true));
+    }
+
+    /**
      * @throws ConfigFileNotValidException|PdoDatabaseException
      */
     protected function setUp(): void
@@ -93,5 +113,4 @@ class CrudTest extends TestCase
 
         parent::tearDown();
     }
-
 }
