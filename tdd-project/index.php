@@ -1,9 +1,8 @@
 <?php
 
 
+use App\Database\{PDODatabaseConnection, PDOQueryBuilder};
 use App\Helpers\Config;
-use App\Database\PDOQueryBuilder;
-use App\Database\PDODatabaseConnection;
 
 
 /* Loading the autoloader for the composer packages. */
@@ -32,7 +31,15 @@ function request()
     return json_decode(file_get_contents("php://input"), true, 512, JSON_THROW_ON_ERROR);
 }
 
-if ( $_SERVER['REQUEST_METHOD'] === 'POST' ){
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdoQuery->table('bugs')->create(request());
+    jsonResponse();
+}
+if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+
+    $pdoQuery->table('bugs')
+        ->where('id', request()['id'])
+        ->update(request());
+
     jsonResponse();
 }
